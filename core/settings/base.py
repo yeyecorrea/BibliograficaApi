@@ -33,7 +33,10 @@ INSTALLED_APPS = [
     
     #DJ-REST-AUTH
     'dj_rest_auth',
-    'dj_rest_auth.registration'
+    'dj_rest_auth.registration',
+    
+    #DJANGO APLICACIONES
+    'applications.authentication',
 ]
 
 MIDDLEWARE = [
