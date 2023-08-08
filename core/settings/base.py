@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     #Aplicacion de terceros
+    'corsheaders',
     
     #DJANGO REST FRAMEWORK
     'rest_framework',
@@ -36,12 +37,17 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     
     #DJANGO APLICACIONES
-    'applications.authentication',
+    'applications.authentication.apps.AuthenticationConfig',
+    'applications.editorial',
+    'applications.author',
+    'applications.book',
+    'applications.binnacle'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -105,7 +111,41 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ]
 }
+
+SITE_ID = 1
+
+REST_AUTH = {
+    'USER_DETAILS_SERIALIZER': 'applications.authentication.serializers.UserSerializer',
+}
+
+CORS_ALLOWED_ORIGINS = ["https://www.thunderclient.com"]
+
+REST_USE_JWT = True
+
+JWT_AUTH_COOKIE = 'Authentication'
+
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+LOGIN_URL = 'http://127.0.0.1:8000/api/auth/login/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yeferson505@outlook.es'
+EMAIL_HOST_PASSWORD = "yeferson1020492202"
+DEFAULT_FROM_EMAIL = "@outlook.es"
+EMAIL_PORT = 465
+
