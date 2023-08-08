@@ -8,6 +8,10 @@ django-ckeditor = "*"
 django = "*"
 djangorestframework = "*"
 django-allauth = "*"
+dj-rest-auth = {extras = ["with_social"], version = "*"}
+pillow = "*"
+django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
